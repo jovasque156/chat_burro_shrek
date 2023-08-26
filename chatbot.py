@@ -1,9 +1,7 @@
 import openai
-import streamlit as st
-from streamlit_chat import message
-
-# openai_api_key = open('key.txt').read()
-# openai.api_key = openai_api_key
+import streamlit as streamlit
+from streamlit import runtime
+runtime.exists()
 
 avatar = {
     'user': 'lorelei',
