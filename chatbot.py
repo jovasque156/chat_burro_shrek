@@ -1,5 +1,5 @@
 import openai
-import streamlit as streamlit
+import streamlit as st
 from streamlit import runtime
 runtime.exists()
 
