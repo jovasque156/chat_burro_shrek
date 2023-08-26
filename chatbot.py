@@ -16,10 +16,11 @@ with st.sidebar:
     #     st.success('HuggingFace Login credentials already provided!', icon='✅')
     #     api_key = st.secrets['APIKEY']
     #     id_model = st.secrets['IDMODEL']
-    #     openai.api_key = api_key
+    
     # else:
     api_key = st.text_input('Ingresar API Key:', type='password')
     id_model = st.text_input('Ingresar Id Modelo:', type='password')
+    openai.api_key = api_key
     if not (api_key and id_model):
         st.warning('Por favor, ingresa tus credenciales!', icon='⚠️')
     else:
