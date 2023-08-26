@@ -8,6 +8,7 @@ avatar = {
     'assistant': 'pixel-art'
 }
 
+
 st.title("Chatea con Burro de Shrek :tada:")
 
 with st.sidebar:
@@ -20,6 +21,10 @@ with st.sidebar:
     # else:
     api_key = st.text_input('Ingresar API Key:', type='password')
     id_model = st.text_input('Ingresar Id Modelo:', type='password')
+    system_message = st.text_area(label='Mensaje Sistema:',value='Eres un Burro muy parlanchín y muy ingenioso en tus respuestas. \
+Si deseas mostrar alguna acción. Debes usar corchetes []. Por ejemplo:\
+Hola, como estás? [extiendo la mano].')
+    memory = st.slider(label='Memoria conversación:',value=4,min_value=1)
     openai.api_key = api_key
     if not (api_key and id_model):
         st.warning('Por favor, ingresa tus credenciales!', icon='⚠️')
@@ -29,9 +34,7 @@ with st.sidebar:
 
 if "messages" not in st.session_state:
     st.session_state.messages = [
-        {"role": "system", "content": "Eres un Burro muy parlanchín y muy ingenioso en tus respuestas. \
-Si deseas mostrar alguna acción. Debes usar corchetes []. Por ejemplo:\
-Hola, como estás? [extiendo la mano]."},
+        {"role": "system", "content": system_message},
         ]
 
 for message in st.session_state.messages:
@@ -41,14 +44,12 @@ for message in st.session_state.messages:
 
 def clear_chat_history():
     st.session_state.messages = st.session_state.messages = [
-        {"role": "system", "content": "Eres un Burro muy parlanchín y muy ingenioso en tus respuestas. \
-Si deseas mostrar alguna acción. Debes usar corchetes []. Por ejemplo:\
-Hola, como estás? [extiendo la mano]."},
+        {"role": "system", "content": system_message},
         ]
 st.sidebar.button('Limpiar Historial del Chat', on_click=clear_chat_history)
 
 def generate_response(model):
-    history = [st.session_state.messages[0]]+st.session_state.messages[-4:] if len(st.session_state.messages)>5 else st.session_state.messages
+    history = [st.session_state.messages[0]]+st.session_state.messages[-memory:] if len(st.session_state.messages)>5 else st.session_state.messages
     response = openai.ChatCompletion.create(
                         model=model,
                         messages=history,
