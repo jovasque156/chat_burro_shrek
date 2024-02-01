@@ -48,7 +48,7 @@ with st.sidebar:
                                 height=180,
                                 placeholder='Instrucciones que complementan el comportamiento de tu modelo de fine-tuning. Ej: Responde siempre alegre.')
     memory = st.slider(label='Memoria conversación (num. mensajes):',value=4, min_value=1)
-    temp = st.slider(label='Memoria conversación (num. mensajes):',value=0.5, min_value=0.0, max_value=2.0, step=0.1)
+    temp = st.slider(label='Creatividad (temperatura):',value=0.5, min_value=0.0, max_value=2.0, step=0.1)
     openai.api_key = api_key
 
 
