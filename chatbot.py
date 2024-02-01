@@ -69,7 +69,7 @@ st.sidebar.button('Limpiar chat', on_click=clear_chat_history)
 
 def generate_response(model):
     history = [st.session_state.messages[0]]+st.session_state.messages[-memory:] if len(st.session_state.messages)>5 else st.session_state.messages
-    response = openai.ChatCompletion.create(
+    response = openai.chat.completions.create(
                         model=model,
                         messages=history,
                         temperature = .5,
