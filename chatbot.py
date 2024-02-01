@@ -47,7 +47,8 @@ with st.sidebar:
     system_message = st.text_area(label='Mensaje de sistema:',
                                 height=180,
                                 placeholder='Instrucciones que complementan el comportamiento de tu modelo de fine-tuning. Ej: Responde siempre alegre.')
-    memory = st.slider(label='Memoria conversación (num. mensajes):',value=4,min_value=1)
+    memory = st.slider(label='Memoria conversación (num. mensajes):',value=4, min_value=1)
+    temp = st.slider(label='Memoria conversación (num. mensajes):',value=0.5, min_value=0.0, max_value=2.0, step=0.1)
     openai.api_key = api_key
 
 
@@ -72,7 +73,7 @@ def generate_response(model):
     response = openai.chat.completions.create(
                         model=model,
                         messages=history,
-                        temperature = .5,
+                        temperature = temp,
                         max_tokens=400
                         )
     msg = response.choices[0].message.content
